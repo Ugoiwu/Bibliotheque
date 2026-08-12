@@ -80,11 +80,15 @@ def modifyBook():
                 bookList().update({"gender": newGender}).eq("title", bookName).eq("author", bookAuthor).execute().data
             elif choice == "lu":
                 bookList().update({"read": not book["read"]}).eq("title", bookName).eq("author", bookAuthor).execute().data
+            else:
+                print("Veuillez choisir une option valide !")
+                continue
 
             choice = input("Voulez vous modifier quelque chose d'autre sur le livre ? (oui/non) ").lower()
             if choice == "non":
                 break
             
+
         
 def listBook():
     nbrOfBooks = len(bookList().select("read").execute().data)
@@ -93,21 +97,25 @@ def listBook():
     choice = input("Vous voulez:\n1. Lister tout les livres\n2. Lister les livres par genre\n3. Lister les livres lus\n4. Lister les livres non lus\nChoix: ")
     books = bookList().select("title", "author", "gender", "read")
 
-    if choice == "1":
-        books = books.execute().data
-
-    elif choice == "2":
-        genderChoice = input("Quel genre de livre voulez vous voir ? ").title()
-        while genderChoice not in [i["gender"] for i in bookList().select("gender").execute().data]:
-            genderChoice = input("Ce type de genre n'est pas présent, quel genre de livre voulez vous voir ? ")
-        books = books.eq("gender", genderChoice).execute().data
-
-    elif choice == "3":
-        books = books.eq("read", True).execute().data
-
-    elif choice == "4":
-        books = books.eq("read", False).execute().data
-
+    while True: 
+        if choice == "1":
+            books = books.execute().data
+            break
+        elif choice == "2":
+            genderChoice = input("Quel genre de livre voulez vous voir ? ").title()
+            while genderChoice not in [i["gender"] for i in bookList().select("gender").execute().data]:
+                genderChoice = input("Ce type de genre n'est pas présent, quel genre de livre voulez vous voir ? ")
+            books = books.eq("gender", genderChoice).execute().data
+            break
+        elif choice == "3":
+            books = books.eq("read", True).execute().data
+            break
+        elif choice == "4":
+            books = books.eq("read", False).execute().data
+            break
+        else:
+            print("Veuillez choisir une option valide !")
+            
     print("\nVous avez:")
     books = sorted(books, key = lambda book : (book["author"], book["title"]))
     for book in books:
