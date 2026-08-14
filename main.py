@@ -80,7 +80,7 @@ def modifyBook():
                 book['author'] = newAuthor
                 bookList().update({"author":newAuthor}).eq("title", bookName).eq("author", bookAuthor).execute().data
             elif choice == "genre":
-                newGender = input(f"Quel est le nouveau nom de l'auteur de {bookTitle(book["title"])} de {book["author"]}, {book["gender"]} ? ")
+                newGender = input(f"Quel est le nouveau genre de {bookTitle(book["title"])} de {book["author"]}, {book["gender"]} ? ")
                 book['gender'] = newGender
                 bookList().update({"gender": newGender}).eq("title", bookName).eq("author", bookAuthor).execute().data
             elif choice == "lu":
