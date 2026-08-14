@@ -10,8 +10,6 @@ bookList = lambda: supabase.table("bibliotheque")
 bookTitle = lambda bookName: f"\033[4m{bookName}\033[0m"
 
 
-# Ajouter un livre
-
 def chooseBook(gender):
     bookName = input("\nQuel est le nom du livre ? ")
     bookAuthor = input("Quel est le nom de l'auteur ? ").title()
@@ -103,7 +101,6 @@ def modifyBook():
                 break
             
 
-
 def listBook():
     nbrOfBooks = len(bookList().select("read").execute().data)
     nbrReadBooks = len(bookList().select("read").eq("read", True).execute().data)
@@ -163,11 +160,13 @@ def putBook():
         else:
             print(f"Il faut ranger {bookTitle(book["title"])} de {book['author']} entre {bookTitle(preBook['title'])} de {preBook['author']} et {bookTitle(postBook['title'])} de {postBook['author']}")
 
+
 def clear():
     if os.name == "nt":
         os.system("cls")
     else:
         print("\033[H\033[J", end="")
+
 
 def menu():
     choice = input("\nQue voulez vous faire ?\n1. Ajouter un livre dans la bibliothèque\n2. Ranger un livre\n3. Lister les livres\n4. Modifier un livre\n5. Vider le terminal\n6. Quitter le programme\nChoix: ").lower()
