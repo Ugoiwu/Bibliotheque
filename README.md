@@ -74,6 +74,7 @@ Il indique notamment les livres qui se trouvent avant et après le livre sélect
 ### Création de la base Supabase
 
 Aller sur Supabase et créer une Database nommée `bibliotheque`.
+
 Lui ajouter les colonnes de type text `title`, `author`, `gender`, et la colonne de type bool `read`.
 
 ### Utilisation python
