@@ -1,4 +1,98 @@
-## Licence
+# Licence
 
 Ce projet est distribué sous licence GNU General Public License v3.0 (GPL-3.0).
 Voir le fichier [LICENSE](LICENSE) pour le texte complet de la licence.
+
+# 📚 Bibliothèque
+
+Petite application Python permettant de gérer une bibliothèque personnelle avec **Supabase / PostgreSQL**.
+
+Le programme permet d'ajouter, consulter, modifier, supprimer et organiser des livres, tout en gardant leur statut de lecture.
+
+## ✨ Fonctionnalités
+
+### 📖 Gestion des livres
+
+* Ajouter un livre
+
+  * Nom
+  * Auteur
+  * Genre
+  * Statut lu / non lu
+  * Vérification des informations avant l'ajout
+  * Détection des doublons
+* Modifier un livre existant
+
+  * Nom
+  * Auteur
+  * Genre
+  * Statut lu / non lu
+* Supprimer un livre
+
+### 🔎 Recherche et sélection
+
+* Recherche d'un livre par son nom
+* Sélection parmi plusieurs résultats
+* Filtrage par genre
+* Sélection de livres existants pour les opérations de modification ou de suppression
+
+### 📚 Liste des livres
+
+Possibilité d'afficher :
+
+1. Tous les livres
+2. Les livres d'un genre précis
+3. Les livres lus
+4. Les livres non lus
+
+Les livres sont automatiquement triés :
+
+**Auteur → Titre**
+
+### 📊 Statistiques
+
+Le programme affiche notamment :
+
+* Nombre de livres lus
+* Nombre total de livres
+* Pourcentage de la bibliothèque déjà lue
+
+Exemple :
+
+```text
+Vous avez lu 12/37 livres soit 32.4% de votre bibliothèque.
+```
+
+### 🗂️ Rangement
+
+Le programme permet également de déterminer où ranger un livre dans la bibliothèque en fonction de son genre et de son ordre alphabétique.
+
+Il indique notamment les livres qui se trouvent avant et après le livre sélectionné.
+
+## 🚀 Utilisation
+
+Installer la dépendance Supabase :
+
+```bash
+pip install supabase
+```
+
+Puis renseigner les informations de connexion à votre projet Supabase dans le programme.
+
+Lancer ensuite :
+
+```bash
+python bibliotheque.py
+```
+
+## 📋 Menu principal
+
+```text
+Que voulez vous faire ?
+
+1. Ajouter un livre
+2. Ranger un livre
+3. Lister les livres
+4. Marquer un livre comme lu/non lu
+5. Modifier/supprimer un livre
+```
