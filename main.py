@@ -1,7 +1,6 @@
 import os
 from supabase import create_client
 
-
 supabase = create_client(
     "//",
     "//"
@@ -13,7 +12,7 @@ bookTitle = lambda bookName: f"\033[4m{bookName}\033[0m"
 
 def chooseBook(gender):
     bookName = input("\nQuel est le nom du livre ? ")
-    bookAuthor = input("Quel est le nom de l'auteur ? ").title()
+    bookAuthor = input("Quel est le nom de l'auteur ? ")
     if gender:
         bookGender = input("Quel est le genre du livre ? ").title()
     while True:
@@ -26,7 +25,7 @@ def chooseBook(gender):
             if error == "1":
                 bookName = input("Quel est le nom du livre ? ")
             elif error == "2":
-                bookAuthor = input("Quel est le nom de l'auteur ? ").title()
+                bookAuthor = input("Quel est le nom de l'auteur ? ")
             elif (error == "3") and (gender) :
                 bookGender = input("Quel est le genre du livre ? ").title()
             else:
@@ -53,7 +52,7 @@ def newBook():
         isRead = input("Avez vous lu le livre ? (oui/non) ").lower() == "oui"
         bookList().insert({
             "title": bookName,
-            "author": bookAuthor.title(),
+            "author": bookAuthor,
             "gender": bookGender.title(),
             "read": isRead
         }).execute()
@@ -61,7 +60,9 @@ def newBook():
 
 def modifyBook():
     books = bookList().select("title", "author").execute().data
+    print(books)
     bookName, bookAuthor = chooseBook(False)
+    print({'title': bookName, 'author': bookAuthor})
     if {'title': bookName, 'author': bookAuthor} not in books:
         print("Le livre n'est pas dans la bibliothèque !")
         if input("Voulez vous en modifier un autre ? (oui/non) ").lower() == "oui":
@@ -81,7 +82,7 @@ def modifyBook():
                 book['author'] = newAuthor
                 bookList().update({"author":newAuthor}).eq("title", bookName).eq("author", bookAuthor).execute().data
             elif choice == "genre":
-                newGender = input(f"Quel est le nouveau genre de {bookTitle(book["title"])} de {book["author"]}, {book["gender"]} ? ")
+                newGender = input(f"Quel est le nouveau nom de l'auteur de {bookTitle(book["title"])} de {book["author"]}, {book["gender"]} ? ")
                 book['gender'] = newGender
                 bookList().update({"gender": newGender}).eq("title", bookName).eq("author", bookAuthor).execute().data
             elif choice == "lu":
@@ -128,7 +129,7 @@ def listBook():
             print("Veuillez choisir une option valide !")
             
     print("\nVous avez:")
-    books = sorted(books, key = lambda book : (book["author"], book["title"]))
+    books = sorted(books, key = lambda book : (book["author"].split(" ")[-1], book["title"]))
     for book in books:
         print(f"{bookTitle(book["title"])}, {book["author"]}, {book["gender"]}, {"lu" if book["read"] else "pas lu"}")
 
@@ -138,7 +139,7 @@ def putBook():
     book = bookList().select("title", "author", "gender").eq("title", bookName).eq("author", bookAuthor).execute().data
     book = book[0]
     books = bookList().select("title", "author", "gender").eq("gender", book["gender"]).execute().data
-    books = sorted(books, key = lambda book : (book["author"], book["title"]))
+    books = sorted(books, key = lambda book : (book["author"].split(" ")[-1], book["title"]))
 
     bookIndex = books.index(book)
     if bookIndex == 0:
@@ -161,13 +162,11 @@ def putBook():
         else:
             print(f"Il faut ranger {bookTitle(book["title"])} de {book['author']} entre {bookTitle(preBook['title'])} de {preBook['author']} et {bookTitle(postBook['title'])} de {postBook['author']}")
 
-
 def clear():
     if os.name == "nt":
         os.system("cls")
     else:
         print("\033[H\033[J", end="")
-
 
 def menu():
     choice = input("\nQue voulez vous faire ?\n1. Ajouter un livre dans la bibliothèque\n2. Ranger un livre\n3. Lister les livres\n4. Modifier un livre\n5. Vider le terminal\n6. Quitter le programme\nChoix: ").lower()
