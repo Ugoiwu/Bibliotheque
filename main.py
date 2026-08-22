@@ -2,8 +2,8 @@ import os
 from supabase import create_client
 
 supabase = create_client(
-    "//",
-    "//"
+    "PROJECT_URL (like https://jfdskljfklsdjfklsdjfklsdjfl.supabase.co)",
+    "PUBLISHABLE_KEY (like sb_publishable_fhdjkfhksdjhfkjs_hfdjsfhsdjk)"
 )
 
 bookList = lambda: supabase.table("bibliotheque")
